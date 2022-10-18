@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: blue;
+        }
+        #container{
+            display: flex;
+        }
+        
+        #box div{
+            
+            border: 1px solid black;
+            width: 200px;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        #box div img{
+            width: 100%;
+        }
+
+        #box1 div{
+            border: 1px solid black;
+            height: 328.63px;
+            width:800px ;
+            margin-bottom: 20px;
+            background-color: white;
+            text-align: center;
+        }
+
+        #cont{
+            background-color: teal;
+            display: flex;
+            justify-content:space-evenly;
+            height: 50px;
+        }
+
+        #cont div{
+            margin-top: 15px;
+            font-size: 30px;
+            font-weight: bolder;
+            color: white;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <div onclick="window.location.href='index.html'">Players page</div>
+        <div onclick="window.location.href='games.html'">Games page</div>
+        
+    </div>
+    <div id="search">
+        <input type="text" name="" id="find" placeholder="search here....." onkeyup="search()">
+    </div>
+    <div id="container">
+    <div id="box"></div>
+    <div id="box1"></div>
+</div>
+</body>
+<script>
+    var url=`https://www.balldontlie.io/api/v1/players`
+
+async function getData(){
+    try{
+        let res = await fetch(url);
+        let database = await res.json();
+        console.log(database.data)
+        checkof(database.data)
+        
+    }catch(err){
+        console.log("err:",err)
+    }
+}
+
+getData()
+
+function checkof(ans){
+    ans.forEach(function(el){
+            let div = document.createElement("div")
+            div.setAttribute("id","fles")
+            var img=document.createElement("img")
+            img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqGTO0jwlHbPlPvSYe5BGdiY1Q7stuw_bWYg&usqp=CAU"
+
+            var H1=document.createElement("h3")
+            H1.innerHTML=` Full name :${el.first_name} ${el.last_name}`
+
+            var position = document.createElement("h4")
+            position.innerHTML=`Position ${el.position}`
+
+            var but=document.createElement("button")
+            but.innerHTML="TEAM DETAILS"
+
+
+            but.addEventListener("click",function(){
+        
+        addtocart("nba-data",el);
+        
+    })
+            
+
+            div.append(img,H1,position,but)
+
+            box.append(div)
+
+
+
+
+        })
+
+
+        function addtocart(key,el){
+    box.innerHTML=null;
+    console.log(el)
+
+    let div = document.createElement("div")
+            div.setAttribute("id","fles")
+            var img=document.createElement("img")
+            img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqGTO0jwlHbPlPvSYe5BGdiY1Q7stuw_bWYg&usqp=CAU"
+
+            var H1=document.createElement("h3")
+            H1.innerHTML=` Full name :${el.first_name} ${el.last_name}`
+
+            var position = document.createElement("h4")
+            position.innerHTML=`Position ${el.position}`
+
+            var but=document.createElement("button")
+            but.innerHTML="TEAM DETAILS"
+
+            div.append(img,H1,position,but)
+
+
+
+            let div2= document.createElement("div")
+
+            let td =document.createElement("h1")
+            td.innerHTML = "Team Details"
+
+            var team = document.createElement("h4")
+            team.innerHTML=`Team :  ${el.team.full_name}`
+
+            var Abbr = document.createElement("h4")
+            Abbr.innerHTML=`Abbrevitation :  ${el.team.abbreviation}`
+
+            var Conference = document.createElement("h4")
+            Conference.innerHTML=`Conference : ${el.team.conference}`
+
+            var Division = document.createElement("h4")
+            Division.innerHTML=`Division :  ${el.team.division}`
+
+            var City = document.createElement("h4")
+            City.innerHTML=`City :  ${el.team.city}`
+
+            div2.append(td,team,Abbr,Conference,Division,City)
+
+            let fidiv = document.createElement("div")
+
+
+            fidiv.append(div,div2)
+
+box1.append(fidiv)
+
+
+
+        }
+        
+}
+</script>
+</html>
